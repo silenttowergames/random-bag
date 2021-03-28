@@ -1,3 +1,5 @@
+#pragma once
+
 /*
 Copyright 2021 Silent Tower Games LLC
 
@@ -8,43 +10,21 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include <stdio.h>
-#include "RandomBag.h"
+#include <stdarg.h>
 
-static void test(RandomBag* r)
-{
-    printf("Emptying bag. Will print INT_MAX when complete\n");
-    
-    for(int i = 0; i < r->count + 1; i++)
-    {
-        printf("%d, ", RandomBag_GetNext(r));
-    }
-    
-    printf("Done!\n\n");
-}
+#ifndef RANDOMBAG_SRAND
+#define RANDOMBAG_SRAND
+#endif
 
-int main()
+typedef struct RandomBag
 {
-    printf("RandomBag example by Silent Tower Games\n\n");
-    
-    RandomBag r;
-    
-    // Create a 3-item list with the numbers 5, 9, and 47
-    r = RandomBag_CreateList(3, 5, 9, 47);
-    test(&r);
-    RandomBag_Free(&r);
-    
-    // Create a list of numbers between 5 and 12
-    r = RandomBag_CreateRange(5, 12);
-    test(&r);
-    RandomBag_Free(&r);
-    
-    // Create an uninitialized 4-item list
-    // You should go in after this & manually set the items
-    // If not, you'll get junk data
-    r = RandomBag_Create(4);
-    test(&r);
-    RandomBag_Free(&r);
-    
-    return 0;
-}
+    int* bag;
+    int count;
+    int used;
+} RandomBag;
+
+RandomBag RandomBag_Create(int count);
+RandomBag RandomBag_CreateList(int count, ...);
+RandomBag RandomBag_CreateRange(int first, int last);
+int RandomBag_GetNext(RandomBag* r);
+RandomBag RandomBag_Free(RandomBag* r);
