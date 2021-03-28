@@ -18,6 +18,13 @@ Then get items from the struct:
 int item = RandomBag_GetItem(&r); // Returns remaining item at random
 // Keep calling until it's out of items
 // When it's out, it will return INT_MAX from <limits.h>
+
+// Alternatively, you could get a more explicit verification that it worked with RandomBag_Out:
+int item;
+if(!RandomBag_Out(&r, &item))
+{
+    // Fail condition
+}
 ```
 
 Finally, remember to free the struct:

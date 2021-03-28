@@ -73,12 +73,22 @@ RandomBag RandomBag_CreateRange(int first, int last)
 
 int RandomBag_GetNext(RandomBag* r)
 {
-    if(r->used >= r->count)
+    int n;
+    
+    if(!RandomBag_Out(r, &n))
     {
         return INT_MAX;
     }
     
-    r->used++;
+    return n;
+}
+
+int RandomBag_Out(RandomBag* r, int* o)
+{
+    if(r->used >= r->count)
+    {
+        return 0;
+    }
     
     int i;
     int timeout = 500;
@@ -91,16 +101,18 @@ int RandomBag_GetNext(RandomBag* r)
         }
         else
         {
-            return INT_MAX;
+            return 0;
         }
     }
     while(r->bag[i] == INT_MAX);
     
-    int n = r->bag[i];
+    r->used++;
+    
+    *o = r->bag[i];
     
     r->bag[i] = INT_MAX;
     
-    return n;
+    return 1;
 }
 
 RandomBag RandomBag_Free(RandomBag* r)

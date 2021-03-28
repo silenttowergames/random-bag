@@ -27,4 +27,5 @@ RandomBag RandomBag_Create(int count);
 RandomBag RandomBag_CreateList(int count, ...);
 RandomBag RandomBag_CreateRange(int first, int last);
 int RandomBag_GetNext(RandomBag* r);
+int RandomBag_Out(RandomBag* r, int* o);
 RandomBag RandomBag_Free(RandomBag* r);

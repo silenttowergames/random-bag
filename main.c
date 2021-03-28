@@ -9,6 +9,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 #include <stdio.h>
+#include <limits.h>
 #include "RandomBag.h"
 
 static void test(RandomBag* r)
@@ -17,7 +18,16 @@ static void test(RandomBag* r)
     
     for(int i = 0; i < r->count + 1; i++)
     {
-        printf("%d, ", RandomBag_GetNext(r));
+        // Example with RandomBag_GetNext:
+        //printf("%d, ", RandomBag_GetNext(r));
+        
+        // Example with RandomBag_Out:
+        int o;
+        if(!RandomBag_Out(r, &o))
+        {
+            o = INT_MAX;
+        }
+        printf("%d ", o);
     }
     
     printf("Done!\n\n");
